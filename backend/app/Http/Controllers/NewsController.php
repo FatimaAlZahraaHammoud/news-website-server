@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Storage;
 class NewsController extends Controller
 {
     // function to get news
-    function get_news(){
-        $news = News::all();
+    function get_news(Request $request){
+
+        $user = $request->user();
+        $userAge = now()->diffInYears($user->date_of_birth);
+        $news = News::where('min_age', '<=', $userAge)->get();
         return response()->json([
             "status" => "success",
             "message" => "getting all news successfully",
