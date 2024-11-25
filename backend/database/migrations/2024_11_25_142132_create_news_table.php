@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('min_age')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
