@@ -105,4 +105,24 @@ class NewsController extends Controller
             ], 500);
         }
     }
+
+    // function to delete news
+    function delete_news(Request $request){
+        $news = News::find($request->id);
+
+        if($news->attachment && Storage::exists($news->attachment)){
+            Storage::delete($news->attachment);
+        }
+        
+        try {
+            $news->delete();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to delete news'], 500);
+        }
+        return response()->json([
+            "status"=> "success",
+            "message"=> "news is deleted successfully",
+            "deleted_news"=> $news,
+        ]);
+    }
 }
