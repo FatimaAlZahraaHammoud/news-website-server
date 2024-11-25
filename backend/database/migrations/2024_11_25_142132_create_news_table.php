@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('admin_id')->constrained(table: 'users')->cascadeOnDelete();
             $table->string('title');
             $table->text('content');
-            $table->unsignedInteger('min_age')->nullable();
+            $table->unsignedInteger('min_age');
             $table->string('attachment')->nullable();
             $table->timestamps();
             $table->softDeletes();
