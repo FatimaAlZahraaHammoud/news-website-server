@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Auth; 
 
 class JWTAuthController extends Controller
 {
@@ -31,6 +33,21 @@ class JWTAuthController extends Controller
 
     // method to login
     public function login(Request $request){
+        $credentials = $request->only('email', 'password');
+        try {
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'Invalid credentials'], 401);
+            }
 
+            $user = Auth::user();
+
+            return response()->json([
+                "user" => $user, 
+                "token" => $token
+            ], 201);
+
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Could not create token'], 500);
+        }
     }
 }
