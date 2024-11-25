@@ -30,7 +30,7 @@ class NewsController extends Controller
             $news->content = $request->content;
             $news->min_age = $request->min_age;
 
-            if ($request->attachment) {
+            if ($request->hasFile('attachment')) {
                 $news->attachment = $request->file('attachment')->storeAs(
                     "attachments/news", 
                     uniqid() . '.' . $request->file('attachment')->getClientOriginalExtension()
@@ -75,7 +75,7 @@ class NewsController extends Controller
             $news->content = $request->content;
             $news->min_age = $request->min_age;
             
-            if ($request->attachment) {
+            if ($request->hasFile('attachment')) {
                 if ($news->attachment && Storage::exists($news->attachment)) {
                     Storage::delete($news->attachment);
                 }
