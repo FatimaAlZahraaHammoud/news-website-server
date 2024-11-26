@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
@@ -23,12 +24,14 @@ class NewsController extends Controller
 
     // function to create news
     function create_news(Request $request){
-        
+        Log::info('create_news called');
         try{
             $news = new News();
+
             $news->title = $request->title;
             $news->content = $request->content;
             $news->min_age = $request->min_age;
+            $news->admin_id = $request->admin_id;
 
             if ($request->hasFile('attachment')) {
                 $news->attachment = $request->file('attachment')->storeAs(
