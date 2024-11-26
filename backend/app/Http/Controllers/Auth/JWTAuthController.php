@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -39,7 +40,7 @@ class JWTAuthController extends Controller
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
 
-            $user = Auth::user();
+            $user = auth()->user();
 
             return response()->json([
                 "user" => $user, 

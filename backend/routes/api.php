@@ -1,5 +1,6 @@
 <?php
 
+namespace App\Http\kernel;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\NewsController;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ Route::post("/login", [JWTAuthController::class, "login"]);
 
 Route::get('/getNews', [NewsController::class, 'get_news']);
 
-Route::middleware('admin')->group(function () {
+Route::middleware([AdminMiddleware::class])->group(function () {
     Route::post('/news/create', [NewsController::class,'create_news']);
     Route::post('/news/update/{id}', [NewsController::class,'update_news']);
     Route::delete('/news/delete/{id}', [NewsController::class, 'delete_news']);
